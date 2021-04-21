@@ -1,6 +1,3 @@
-# Title
-## Extra Credit
-
 # Frontend Starterpark - Short Assignment
 
 Created a simple webpack setup to deploy on Netlify. We started from scratch and went step by step through the process of installing all the libraries and dependencies needed, telling our config file how to handle each file . Through doing this assignment, I learned:
