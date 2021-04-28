@@ -7,28 +7,6 @@ html {
   text-align: center;
 }
 
-.container {
-  position: relative;
-  background-image: url('img/clouds.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.logo {
-  position: relative;
-  background-image: url('img/coco.jpg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-radius: 50%;
-  border: yellow 10px solid;
-  width: 20vw;
-  height: 20vw;
-  margin: 5% auto;
-}
-
-#main {
-  position: relative;
-  color: black;
-  font-size: 2em;
-  height: 100%;
+.active {
+  color: pink;
 }
