@@ -17,7 +17,7 @@
     - In the main screen, when the url is broken it shows a fallback silhouette of the animal or if no tag exists for it, an amiguous creature silhouette
     - In the edit screen, when the url is broken it changes a speech bubble above the animal icon to ask the user to reset the url - this gave me a lot of issues and I don't think I did it in the most React-friendly way; pointers here would be really appreciated D:
 - Learned page animations using react-router-transition
-- Used toast notifications to notify user when fields were left unfilled 
+- Used toast notifications to notify user when any field was left unfilled - I also remove these notifications upon changing pages 
 - Used react-modal for a fun display that shows up when you try to delete a post
 - Filter by tag (animal type!) 
 - Lots of animations and effects everywhere
