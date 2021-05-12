@@ -1,19 +1,85 @@
-// keys for actiontypes
+import axios from 'axios';
+
+const ROOT_URL = 'https://platform.cs52.me/api';
+const API_KEY = '?key=snow';
+
 export const ActionTypes = {
-  INCREMENT: 'INCREMENT',
-  DECREMENT: 'DECREMENT',
+  FETCH_POSTS: 'FETCH_POSTS',
+  FETCH_POST: 'FETCH_POST',
+  TOGGLE_FILTER_TAG: 'TOGGLE_FILTER_TAG',
+  CLEAR_FILTER_TAGS: 'CLEAR_FILTER_TAGS',
+  ERROR_SET: 'ERROR_SET',
+  ERROR_CLEAR: 'ERROR_CLEAR',
 };
 
-export function increment() {
-  return {
-    type: ActionTypes.INCREMENT,
-    payload: null,
+export function fetchPost(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+      dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
+    }).catch((error) => {
+      console.log(error);
+      dispatch({ type: ActionTypes.ERROR_SET, error });
+    });
   };
 }
 
-export function decrement() {
+export function fetchPosts() {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+      dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
+    }).catch((error) => {
+      console.log(error);
+      dispatch({ type: ActionTypes.ERROR_SET, error });
+    });
+  };
+}
+
+const clearFilterTags = () => {
   return {
-    type: ActionTypes.DECREMENT,
+    type: ActionTypes.CLEAR_FILTER_TAGS,
     payload: null,
+  };
+};
+
+export function createPost(post, history) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/posts${API_KEY}`, post).then((response) => {
+      dispatch(clearFilterTags());
+      history.push('/'); // navigate to main page after creation
+    }).catch((error) => {
+      console.log(error);
+      dispatch({ type: ActionTypes.ERROR_SET, error });
+    });
+  };
+}
+
+export function updatePost(id, post, history) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post).then(() => {
+      dispatch(clearFilterTags());
+      history.push('/'); // navigate to main page after update
+    }).catch((error) => {
+      console.log(error);
+      dispatch({ type: ActionTypes.ERROR_SET, error });
+    });
+  };
+}
+
+export function deletePost(id, history) {
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+      dispatch(clearFilterTags());
+      history.push('/'); // navigate to main page after deletion
+    }).catch((error) => {
+      console.log(error);
+      dispatch({ type: ActionTypes.ERROR_SET, error });
+    });
+  };
+}
+
+export function toggleFilterTag(tag) {
+  return {
+    type: ActionTypes.TOGGLE_FILTER_TAG,
+    payload: tag,
   };
 }

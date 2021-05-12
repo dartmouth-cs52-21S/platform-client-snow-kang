@@ -1,12 +1,387 @@
-body,
-html {
-  font-family: "Roboto", sans-serif;
-  background: linear-gradient(to bottom, #87e0fd 0%, #53cbf1 40%, #05abe0 100%);
-  height: 100%;
-  overflow: hidden;
-  text-align: center;
+$HEADER-HEIGHT: 8rem;
+$PINK: rgb(255, 208, 216);
+$BLUE: rgb(96, 133, 175);
+$BLACK: rgb(24, 24, 24);
+$CARD-SIZE: 300px;
+$CARD-SPACING: 10px;
+$FULL-WIDTH: 100vw;
+
+/* Reusing rainbow from my Buzzfeed assignment */ 
+$RAINBOW-GRADIENT:  linear-gradient(
+  to right,
+  #ff6663,
+  #feb144,
+  #ffde53,
+  #9ee09e,
+  #9ec1cf,
+  #cc99c9,
+  #9ec1cf,
+  #9ee09e,
+  #ffde53,
+  #feb144,
+  #ff6663
+);
+
+// For Page Transition Animation 
+.switch-wrapper {
+  position: relative;
+  
+  > div {
+  position: absolute;
+  width: $FULL-WIDTH;
+  }
 }
 
-.active {
-  color: pink;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(90deg, rgb(240, 240, 240) 0%, rgb(230, 230, 230) 52%, rgba(240,240,240,1) 100%);
+  text-align: center;
+  word-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(248, 248, 248);
+  border-radius: 0 0 3rem 3rem;
+  width: 70vw;
+  margin: 0 15vw;
+  height: $HEADER-HEIGHT;
+
+  > * {
+    padding: 0 2vw;
+  }
+  
+
+  div:first-child {
+    display: flex;
+    justify-content: space-between;
+    background: $BLUE;
+
+    nav, ul, li, a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    
+    ul {
+      list-style: none;
+
+        a {
+          margin: 0 1vw;
+          height: 100%;
+          color: white;
+          font-size: 1.2rem;
+
+          &:hover {
+            color: $PINK;
+            transition: all ease .2s;
+          }
+        }
+    }
+  }
+
+  div:last-child {
+    font-size: 1.8rem;
+    font-family: 'Cormorant SC', serif;
+    text-transform: capitalize;
+    margin: .7rem;
+    i {
+      color: $PINK;
+    }
+  }
+
+  #logo {
+    height: $HEADER-HEIGHT*.4;
+    padding: .5rem;
+  }
+}
+
+/* Filter by Tag Section*/
+.tag-filters {
+  display: flex;
+  justify-content: center;
+
+  > label {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 3vw;
+    font-size: 1rem;
+    text-transform: uppercase;
+
+    > * {
+      margin: 0 .5rem;
+      list-style: none;
+    }
+  }
+}
+
+.no-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+
+  > div.message {
+    width: 20rem;
+    margin: 2rem 0;
+  }
+
+  > a {
+    padding: 1rem 2rem;
+    background: $PINK;
+    color: black;
+
+    &:hover {
+      font-size: 1.5rem;
+      transition: all ease .3s;
+    }
+  }
+}
+
+.name {
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  color: black;
+  margin: .5rem;
+}
+
+.tags {
+  display: inline-block;
+  background-color: $BLUE;
+  color: white;
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  text-transform: lowercase;
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+/* Home page */
+.cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  max-width: $FULL-WIDTH;
+  margin-bottom: 3rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: $CARD-SPACING;
+
+  &:hover {
+    transform: scale(1.06);
+    transition: all ease .3s;
+  }
+
+  .circular {
+    height: $CARD-SIZE;
+    width: $CARD-SIZE;
+    min-height: 12rem;
+    min-width: 12rem;
+    overflow: hidden;
+    border-radius: 50%;
+    border: solid 3px white;
+    background: $PINK;
+    box-shadow: lightgray 0 1rem 1rem;
+
+    + .name {
+      max-width: $CARD-SIZE;
+      min-width: 12rem;
+    }
+
+    img {
+      height: $CARD-SIZE;
+      width: $CARD-SIZE;
+      object-fit: cover;
+    }
+  }
+}
+
+/* Creating and updating posts*/
+textarea {
+  resize: vertical;
+  padding: .5rem 0rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: .3rem;
+  outline: none;
+}
+
+.create-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-post {
+  width: 35vw;
+  background: $PINK;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: left;
+  font-size: 1.2rem;
+  box-shadow: 8px 8px 0 black;
+  margin:3rem 0;
+  
+  .post-content {
+    min-height: 10rem;
+  }
+
+  .icons {
+    font-size: 2rem;
+    color: $BLUE;
+    display: flex;
+    justify-content: center;
+
+    i:hover {
+      cursor: pointer;
+      color: white;
+    }
+  }
+}
+
+/* Updating posts page*/
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+
+  > * {
+    border:solid 2px black;
+    border-radius: 1rem;
+    background: none;
+    outline:none;
+    padding: .5rem 1rem;
+    font-size: 1.1rem;
+    margin: 1rem .5rem;
+
+    &:hover {
+      background-color: lighten($color: $PINK, $amount: 5%);
+      cursor: pointer;
+      transition: all ease .3s ;
+    }
+  }
+}
+
+.expanded-post {
+  width: $FULL-WIDTH;
+  display: flex;
+  justify-content: center;
+
+  .preview-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 3rem 0;
+
+    .preview-left-panel {
+      position: relative;
+
+      .post-cover {
+        height: auto;
+        max-width:330px;
+        max-height:500px;
+        width: auto;
+        height: auto;
+        box-shadow: lightgray 0 1rem 1rem;
+        border: 3px solid white;
+        border-radius: 1rem;
+        margin-top: 3rem;
+        background: $PINK;
+      }
+  
+      .speech-bubble {
+        position: absolute;
+        top: -2rem;
+        right: 0;
+        left: 0;
+        margin: auto;
+        height: 5rem;
+      }
+    }
+
+    .preview-right-panel {
+      width: 40vw;
+      margin-left: 5rem;
+
+      #fan-mail-title {
+        font-family: Petit Formal Script;
+        font-size: 2rem;
+      }
+
+      .content {
+        margin-top: 1rem;
+        background: $BLUE;
+        color: white;
+        border: .5rem solid white;
+        min-height: 350px;
+        border-radius: 1rem;
+        padding: 2rem;
+      }
+    }
+  }
+}
+
+/* Modal upon Deletion Request */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  top: -$HEADER-HEIGHT;
+  left: 0px;
+  width: $FULL-WIDTH;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  position: relative;
+  border-radius: 1rem;
+  background: rgb(255, 230, 234);
+  font-size: 1.5rem;
+  margin: 10% auto;
+  padding: 20px;
+  width: 60%;
+
+  /* Emoji cursors from emojicursor.app */
+  #delete-post:hover {
+    cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>😱</text></svg>") 16 0,auto; 
+    transform: scale(0.5);
+    transition: 10s ease;
+  }
+
+  #keep-post:hover {
+    cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>❤️</text></svg>") 16 0,auto; 
+    font-size: 1.2rem;
+    background: $RAINBOW-GRADIENT;
+    animation: scroll-right 30s linear infinite;
+  }
+}
+
+@keyframes scroll-right {
+  100% {
+    background-position: -3000px 0px;
+  }
 }
