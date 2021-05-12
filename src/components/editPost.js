@@ -4,6 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import ReactMarkdown from 'react-markdown';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactModal from 'react-modal';
 import {
   createPost, updatePost, deletePost, fetchPost,
 } from '../actions';
@@ -15,6 +16,8 @@ class EditPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      subtitle: '',
+      showModal: false,
       post: {
         title: '',
         coverUrl: '',
@@ -29,13 +32,7 @@ class EditPost extends Component {
     if (this.props.postID) {
       this.props.fetchPost(this.props.postID);
     }
-
-    // When the user clicks anywhere outside of the modal-content, close the modal
-    window.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal')) {
-        e.target.style.display = 'none';
-      }
-    });
+    ReactModal.setAppElement('#main');
   }
 
   handleSave = () => {
@@ -56,6 +53,7 @@ class EditPost extends Component {
   handleEdit = () => {
     this.setState((prevState) => {
       return {
+        ...prevState,
         post: {
           title: this.props.current.title,
           coverUrl: this.props.current.coverUrl,
@@ -67,15 +65,13 @@ class EditPost extends Component {
     });
   }
 
-  closeModal = () => {
-    const modal = document.querySelector('.modal');
-    modal.style.display = 'none';
+  openModal = () => {
+    this.setState({ showModal: true });
   }
 
-  handleDeleteRequest = () => {
-    const modal = document.querySelector('.modal');
-    modal.style.display = 'block';
-  };
+  closeModal = () => {
+    this.setState({ showModal: false });
+  }
 
   handleDelete = () => {
     this.props.deletePost(this.props.postID, this.props.oldHistory);
@@ -128,17 +124,33 @@ class EditPost extends Component {
         </div>
       );
     } else {
+      const customStyles = {
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+          padding: '20vh 5vw',
+          background: 'pink',
+        },
+      };
       return (
         <div className="preview-post">
-          <div className="modal">
-            <div className="modal-content">
-              <p>Look, it&apos;s not too late to change your mind. I gain a lot of joy from getting compliments. Please don&apos;t take my joy away...please</p>
-              <div className="buttons">
-                <div id="delete-post" role="button" tabIndex="0" onClick={this.handleDelete}>Delete and accept you are heartless</div>
-                <div id="keep-post" role="button" tabIndex="0" onClick={this.closeModal}>Keep and allow me to continue receiving my positive affirmations</div>
-              </div>
+          <ReactModal
+            isOpen={this.state.showModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Deletion Modal"
+          >
+            <h2>WHAT????</h2>
+            <p>Look, it&apos;s not too late to change your mind. <br />I gain a lot of joy from getting compliments. Please don&apos;t take my joy away...please</p>
+            <div className="buttons">
+              <div id="delete-post" role="button" tabIndex="0" onClick={this.handleDelete}>Delete and accept you are heartless</div>
+              <div id="keep-post" role="button" tabIndex="0" onClick={this.closeModal}>Keep and allow me to continue receiving my positive affirmations</div>
             </div>
-          </div>
+          </ReactModal>
           <div className="preview-left-panel">
             <CoverImg srcImg={this.props.current.coverUrl} tags={this.props.current.tags} isEditPage="true" />
             <div className="name">{this.props.current.title}</div>
@@ -151,7 +163,7 @@ class EditPost extends Component {
             </div>
             <div className="buttons">
               <input type="button" onClick={this.handleEdit} value="Give me a compliment" />
-              <input type="button" onClick={this.handleDeleteRequest} value="Delete me?? You wouldn&apos;t, would you?!" />
+              <input type="button" onClick={this.openModal} value="Delete me?? You wouldn&apos;t, would you?!" />
             </div>
           </div>
         </div>
