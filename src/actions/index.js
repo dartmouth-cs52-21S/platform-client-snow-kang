@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const ROOT_URL = 'https://platform.cs52.me/api';
-const API_KEY = '?key=snow';
+// const ROOT_URL = 'https://platform.cs52.me/api';
+// const API_KEY = '?key=snow';
+const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -14,7 +15,7 @@ export const ActionTypes = {
 
 export function fetchPost(id) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+    axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
     }).catch((error) => {
       console.log(error);
@@ -25,7 +26,7 @@ export function fetchPost(id) {
 
 export function fetchPosts() {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+    axios.get(`${ROOT_URL}/posts`).then((response) => {
       dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
     }).catch((error) => {
       console.log(error);
@@ -43,7 +44,7 @@ const clearFilterTags = () => {
 
 export function createPost(post, history) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/posts${API_KEY}`, post).then((response) => {
+    axios.post(`${ROOT_URL}/posts`, post).then((response) => {
       dispatch(clearFilterTags());
       history.push('/'); // navigate to main page after creation
     }).catch((error) => {
@@ -55,7 +56,7 @@ export function createPost(post, history) {
 
 export function updatePost(id, post, history) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post).then(() => {
+    axios.put(`${ROOT_URL}/posts/${id}`, post).then(() => {
       dispatch(clearFilterTags());
       history.push('/'); // navigate to main page after update
     }).catch((error) => {
@@ -67,7 +68,7 @@ export function updatePost(id, post, history) {
 
 export function deletePost(id, history) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+    axios.delete(`${ROOT_URL}/posts/${id}`).then((response) => {
       dispatch(clearFilterTags());
       history.push('/'); // navigate to main page after deletion
     }).catch((error) => {
