@@ -74,6 +74,7 @@ class EditPost extends Component {
   }
 
   handleDelete = () => {
+    this.closeModal();
     this.props.deletePost(this.props.postID, this.props.oldHistory);
   }
 
@@ -132,7 +133,7 @@ class EditPost extends Component {
           bottom: 'auto',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          padding: '20vh 5vw',
+          padding: '15vh 5vw',
           background: 'pink',
         },
       };
