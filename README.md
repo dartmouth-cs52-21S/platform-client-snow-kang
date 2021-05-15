@@ -20,10 +20,15 @@
 - Used toast notifications to notify user when any field was left unfilled - I also remove these notifications upon changing pages 
 - Used react-modal for a fun display that shows up when you try to delete a post
 - Filter by tag (animal type!) 
+- Preview while editing of both the card that will show in the All Posts page as well as the text that will shows in the single Post preview page
+    - Instantly shows fallback silhouette when link is broken
+    - Instantly shows real image when the link is valid
 - Lots of animations and effects everywhere
 
 ## Screenshots
-![screen1](https://user-images.githubusercontent.com/38738497/118034628-32fe5000-b338-11eb-937c-c69a3cf28c13.PNG)
-![screen2](https://user-images.githubusercontent.com/38738497/118034861-7789eb80-b338-11eb-8735-dd8f213fd157.PNG)
-![screen3](https://user-images.githubusercontent.com/38738497/118034862-7953af00-b338-11eb-9f88-8845033999ec.PNG)
-![screen4](https://user-images.githubusercontent.com/38738497/118034985-9ee0b880-b338-11eb-9f27-8c344b7c0557.PNG)
+![screen1](https://user-images.githubusercontent.com/38738497/118359030-7a125e00-b54f-11eb-9129-2c84bf61c41f.PNG)
+![screen2](https://user-images.githubusercontent.com/38738497/118359031-7a125e00-b54f-11eb-95ce-19edaefbd0d6.PNG)
+![screen3](https://user-images.githubusercontent.com/38738497/118359034-7aaaf480-b54f-11eb-94f4-c265b42fb089.PNG)
+![screen4](https://user-images.githubusercontent.com/38738497/118359035-7b438b00-b54f-11eb-88f9-675287a377b5.PNG)
+![screen5](https://user-images.githubusercontent.com/38738497/118359029-78e13100-b54f-11eb-9f0c-3ef35d3ada10.PNG)
+
