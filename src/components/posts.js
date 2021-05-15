@@ -21,7 +21,7 @@ const Posts = (props) => {
           <div>
             <div className="tags">{post.tags}</div>
             {post.parents.map((parent) => (
-              <div className="parent" key={parent}>Parent: {parent}</div>
+              <div className="parent" key={parent}>{parent}</div>
             ))}
           </div>
         </NavLink>
@@ -64,7 +64,11 @@ const Posts = (props) => {
   return (
     <div>
       <TagFilters />
-      <input id="searchbar" type="text" onChange={(e) => { props.updateSearch(e.target.value); }} placeholder="Further refine your search" />
+      <input id="searchbar"
+        type="text"
+        onChange={(e) => { props.updateSearch(e.target.value); }}
+        placeholder="Search by animal type (blue), parent (pink), or pet name"
+      />
       <div className="cards-container">
         {chooseCardsToRender().length > 0 ? renderCards(chooseCardsToRender()) : renderNoResult()}
       </div>

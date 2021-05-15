@@ -144,7 +144,7 @@ class EditPost extends Component {
   renderParents = (parents) => {
     if (parents) {
       return (parents.map((parent) => (
-        <div className="parent" key={parent}>Parent: {parent}</div>
+        <div className="parent" key={parent}>{parent}</div>
       )));
     } else {
       return (null);
@@ -154,35 +154,43 @@ class EditPost extends Component {
   renderPostText = () => {
     if (this.state.isEditing) {
       return (
-        <div className="edit-post">
-          <p>Pet&apos;s name</p>
-          <TextareaAutosize
-            onChange={(e) => this.onInputChange(e, 'title')}
-            value={this.state.post.title}
-          />
-          <p>Pet&apos;s parent(s) separated by commas (ex. &apos;mom, dad&apos;)</p>
-          <TextareaAutosize
-            onChange={(e) => this.onInputChange(e, 'parents')}
-            value={this.state.post.parents}
-          />
-          <p>Type of animal (ex. &apos;dog&apos;)</p>
-          <TextareaAutosize
-            onChange={(e) => this.onInputChange(e, 'tags')}
-            value={this.state.post.tags}
-          />
-          <p>Tell us about your pet and all of their best traits! Now is not the time to hold back 😇</p>
-          <TextareaAutosize className="post-content"
-            onChange={(e) => this.onInputChange(e, 'content')}
-            value={this.state.post.content}
-            placeholder="Markdown supported!"
-          />
-          <p>Image Url</p>
-          <TextareaAutosize
-            onChange={(e) => this.onInputChange(e, 'coverUrl')}
-            value={this.state.post.coverUrl}
-          />
-          <div className="icons">
-            <i className="fas fa-save" onClick={this.handleSave} role="button" tabIndex="0" label="Save Post" />
+        <div className="edit-and-preview">
+          <div className="edit-post">
+            <p>Pet&apos;s name</p>
+            <TextareaAutosize
+              onChange={(e) => this.onInputChange(e, 'title')}
+              value={this.state.post.title}
+            />
+            <p>Pet&apos;s parent(s) separated by commas (ex. &apos;mom, dad&apos;)</p>
+            <TextareaAutosize
+              onChange={(e) => this.onInputChange(e, 'parents')}
+              value={this.state.post.parents}
+            />
+            <p>Type of animal (ex. &apos;dog&apos;)</p>
+            <TextareaAutosize
+              onChange={(e) => this.onInputChange(e, 'tags')}
+              value={this.state.post.tags}
+            />
+            <p>Tell us about your pet and all of their best traits! Now is not the time to hold back 😇</p>
+            <TextareaAutosize className="post-content"
+              onChange={(e) => this.onInputChange(e, 'content')}
+              value={this.state.post.content}
+              placeholder="Markdown supported!"
+            />
+            <p>Image Url</p>
+            <TextareaAutosize
+              onChange={(e) => this.onInputChange(e, 'coverUrl')}
+              value={this.state.post.coverUrl}
+            />
+            <div className="icons">
+              <i className="fas fa-save" onClick={this.handleSave} role="button" tabIndex="0" label="Save Post" />
+            </div>
+          </div>
+          <div className="edit-preview">
+            <CoverImg srcImg={this.state.post.coverUrl} tags={this.state.post.tags} />
+            <div className="name">{this.state.post.title}</div>
+            <div className="tags">{this.state.post.tags}</div>
+            {this.renderParents(this.state.post.parents.split(','))}
           </div>
         </div>
       );
