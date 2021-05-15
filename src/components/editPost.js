@@ -161,15 +161,17 @@ class EditPost extends Component {
               onChange={(e) => this.onInputChange(e, 'title')}
               value={this.state.post.title}
             />
-            <p>Pet&apos;s parent(s) separated by commas (ex. &apos;mom, dad&apos;)</p>
+            <p>Pet&apos;s parent(s) separated by commas</p>
             <TextareaAutosize
               onChange={(e) => this.onInputChange(e, 'parents')}
               value={this.state.post.parents}
+              placeholder="ex. &apos;mom, dad&apos;"
             />
-            <p>Type of animal (ex. &apos;dog&apos;)</p>
+            <p>Type of animal</p>
             <TextareaAutosize
               onChange={(e) => this.onInputChange(e, 'tags')}
               value={this.state.post.tags}
+              placeholder="ex. &apos;dog&apos;, &apos;cat&apos;, &apos;turtle&apos;, &apos;fish&apos;, &apos;chinchilla&apos;, or other"
             />
             <p>Tell us about your pet and all of their best traits! Now is not the time to hold back 😇</p>
             <TextareaAutosize className="post-content"
@@ -181,6 +183,7 @@ class EditPost extends Component {
             <TextareaAutosize
               onChange={(e) => this.onInputChange(e, 'coverUrl')}
               value={this.state.post.coverUrl}
+              placeholder="After filling out the type of animal (ex. 'dog), try a broken link here"
             />
             <div className="icons">
               <i className="fas fa-save" onClick={this.handleSave} role="button" tabIndex="0" label="Save Post" />
