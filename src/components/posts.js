@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { fetchPosts, deletePost } from '../actions';
+import { fetchPosts, deletePost, updateSearch } from '../actions';
 import CoverImg from './coverImg';
 import TagFilters from './tagFilters';
 
@@ -38,12 +38,35 @@ const Posts = (props) => {
     );
   };
 
+  // Get Intersection of posts filtered by tag and filtered by search
+  const intersectArrays = () => {
+    return props.filteredPosts.filter((post) => props.searchedPosts.includes(post));
+  };
+
+  const chooseCardsToRender = () => {
+    if (props.checkedTags.size === 0) {
+      if (props.searchedTerm.length === 0) {
+        // Render every post if there are no tags and no search term
+        return props.all;
+      } else {
+        // Render only posts filtered by search term if there are no tags
+        return props.searchedPosts;
+      }
+    } else if (props.searchedTerm.length === 0) {
+      // Render only posts filtered by tag if there are no search terms
+      return props.filteredPosts;
+    } else {
+      // Render intersection of both filters when they both have conditions
+      return intersectArrays();
+    }
+  };
+
   return (
     <div>
       <TagFilters />
+      <input type="text" onChange={(e) => { props.updateSearch(e.target.value); }} placeholder="Further refine your search" />
       <div className="cards-container">
-        {props.checkedTags.size === 0 ? renderCards(props.all) : renderCards(props.filteredPosts)}
-        {props.checkedTags.size > 0 && props.filteredPosts.length === 0 ? renderNoResult() : ''}
+        {chooseCardsToRender().length > 0 ? renderCards(chooseCardsToRender()) : renderNoResult()}
       </div>
     </div>
   );
@@ -53,7 +76,9 @@ const Posts = (props) => {
 const mapStateToProps = (state) => ({
   all: state.posts.all,
   checkedTags: state.posts.checkedTags,
+  searchedTerm: state.posts.searchedTerm,
   filteredPosts: state.posts.filteredPosts,
+  searchedPosts: state.posts.searchedPosts,
 });
 
-export default connect(mapStateToProps, { fetchPosts, deletePost })(Posts);
+export default connect(mapStateToProps, { fetchPosts, deletePost, updateSearch })(Posts);

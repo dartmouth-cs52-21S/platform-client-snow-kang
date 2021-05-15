@@ -9,6 +9,7 @@ export const ActionTypes = {
   FETCH_POST: 'FETCH_POST',
   TOGGLE_FILTER_TAG: 'TOGGLE_FILTER_TAG',
   CLEAR_FILTER_TAGS: 'CLEAR_FILTER_TAGS',
+  UPDATE_SEARCH: 'UPDATE_SEARCH',
   ERROR_SET: 'ERROR_SET',
   ERROR_CLEAR: 'ERROR_CLEAR',
 };
@@ -86,5 +87,12 @@ export function toggleFilterTag(tag) {
   return {
     type: ActionTypes.TOGGLE_FILTER_TAG,
     payload: tag,
+  };
+}
+
+export function updateSearch(search) {
+  return {
+    type: ActionTypes.UPDATE_SEARCH,
+    payload: search,
   };
 }

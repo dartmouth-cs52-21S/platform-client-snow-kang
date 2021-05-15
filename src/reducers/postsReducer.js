@@ -7,7 +7,9 @@ const initialState = {
   all: [],
   current: {},
   checkedTags: new Set(),
+  searchedTerm: '',
   filteredPosts: [],
+  searchedPosts: [],
 };
 
 const filterPost = (postTag, checkedTags) => {
@@ -20,7 +22,7 @@ const filterPost = (postTag, checkedTags) => {
 };
 
 const PostsReducer = (state = initialState, action) => {
-  let checkedTags, filteredPosts;
+  let checkedTags, filteredPosts, searchedPosts;
   switch (action.type) {
     case ActionTypes.FETCH_POSTS:
       return { ...state, all: action.payload };
@@ -34,6 +36,14 @@ const PostsReducer = (state = initialState, action) => {
       return { ...state, checkedTags, filteredPosts };
     case ActionTypes.CLEAR_FILTER_TAGS:
       return { ...state, checkedTags: new Set(), filteredPosts: [] };
+    case ActionTypes.UPDATE_SEARCH:
+      searchedPosts = state.all.filter((post) => {
+        // Make an array containing parents (multiple items), tags (singular item), title (singular item)
+        return post.parents.concat([post.title, post.tags])
+          // Turn this array into a string and check if queried term is contained in the array
+          .join(' ').includes(action.payload);
+      });
+      return { ...state, searchedPosts, searchedTerm: action.payload };
     default:
       return state;
   }
