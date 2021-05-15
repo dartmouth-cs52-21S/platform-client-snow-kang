@@ -282,7 +282,6 @@ textarea {
 }
 
 .expanded-post {
-  width: $FULL-WIDTH;
   display: flex;
   justify-content: center;
 
@@ -293,10 +292,14 @@ textarea {
 
     .preview-left-panel {
       position: relative;
+      width: 15vw;
+
+      .name {
+        max-width: 100%;
+      }
 
       .post-cover {
-        height: auto;
-        max-width:330px;
+        max-width: 100%;
         max-height:500px;
         width: auto;
         height: auto;

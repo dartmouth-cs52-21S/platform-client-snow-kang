@@ -4,6 +4,7 @@ const fallbackDog = require('../img/mysteryDog.png');
 const fallbackCat = require('../img/mysteryCat.png');
 const fallbackTurtle = require('../img/mysteryTurtle.png');
 const fallbackFish = require('../img/mysteryFish.png');
+const fallbackChinchilla = require('../img/mysteryChinchilla.png');
 const fallbackAnimal = require('../img/mysteryAnimal.png');
 const speechBubble = require('../img/speechBubble.png');
 const speechBubbleFallback = require('../img/speechBubbleFallback.png');
@@ -28,6 +29,9 @@ const CoverImg = (props) => {
         break;
       case 'fish':
         e.target.src = fallbackFish;
+        break;
+      case 'chinchilla':
+        e.target.src = fallbackChinchilla;
         break;
       default:
         e.target.src = fallbackAnimal;

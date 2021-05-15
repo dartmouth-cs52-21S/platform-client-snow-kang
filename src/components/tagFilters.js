@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toggleFilterTag } from '../actions';
 
-export const possibleTags = ['dog', 'cat', 'turtle', 'fish', 'other'];
+export const possibleTags = ['dog', 'cat', 'turtle', 'fish', 'chinchilla', 'other'];
 
 const TagFilters = (props) => {
   return (
