@@ -64,7 +64,7 @@ const Posts = (props) => {
   return (
     <div>
       <TagFilters />
-      <input type="text" onChange={(e) => { props.updateSearch(e.target.value); }} placeholder="Further refine your search" />
+      <input id="searchbar" type="text" onChange={(e) => { props.updateSearch(e.target.value); }} placeholder="Further refine your search" />
       <div className="cards-container">
         {chooseCardsToRender().length > 0 ? renderCards(chooseCardsToRender()) : renderNoResult()}
       </div>

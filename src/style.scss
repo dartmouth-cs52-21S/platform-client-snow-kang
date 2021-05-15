@@ -105,7 +105,7 @@ header {
   }
 }
 
-/* Filter by Tag Section*/
+/* Filter Section*/
 .tag-filters {
   display: flex;
   justify-content: center;
@@ -122,6 +122,10 @@ header {
       list-style: none;
     }
   }
+}
+
+#searchbar {
+  padding: 0.2rem 0.5rem;
 }
 
 .no-result {

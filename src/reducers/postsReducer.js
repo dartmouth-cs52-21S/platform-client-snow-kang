@@ -41,7 +41,7 @@ const PostsReducer = (state = initialState, action) => {
         // Make an array containing parents (multiple items), tags (singular item), title (singular item)
         return post.parents.concat([post.title, post.tags])
           // Turn this array into a string and check if queried term is contained in the array
-          .join(' ').includes(action.payload);
+          .join(' ').toLowerCase().includes(action.payload);
       });
       return { ...state, searchedPosts, searchedTerm: action.payload };
     default:
