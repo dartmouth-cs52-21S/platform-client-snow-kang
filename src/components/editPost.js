@@ -19,6 +19,7 @@ class EditPost extends Component {
         coverUrl: '',
         content: '',
         tags: '',
+        parents: '',
       },
       newComment: '',
       showModal: false,
@@ -42,10 +43,14 @@ class EditPost extends Component {
       }
     }
 
+    // Ensure no duplicate parents
+    const uniqueParents = new Set(this.state.post.parents.split(','));
+    const newPost = { ...this.state.post, parents: Array.from(uniqueParents) };
+
     if (this.props.postID) {
-      this.props.updatePost(this.props.postID, this.state.post, this.props.oldHistory);
+      this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
     } else {
-      this.props.createPost(this.state.post, this.props.oldHistory);
+      this.props.createPost(newPost, this.props.oldHistory);
     }
   };
 
@@ -59,7 +64,7 @@ class EditPost extends Component {
           coverUrl: this.props.current.coverUrl,
           content: this.props.current.content,
           tags: this.props.current.tags,
-          comments: this.props.current.comments,
+          parents: this.props.current.parents.join(','),
         },
         isEditing: !prevState.isEditing,
       };
@@ -136,17 +141,32 @@ class EditPost extends Component {
     }
   }
 
+  renderParents = (parents) => {
+    if (parents) {
+      return (parents.map((parent) => (
+        <div className="parent" key={parent}>Parent: {parent}</div>
+      )));
+    } else {
+      return (null);
+    }
+  }
+
   renderPostText = () => {
     if (this.state.isEditing) {
       return (
         <div className="edit-post">
-          <p>Pet name</p>
-          <TextareaAutosize className="post-title"
+          <p>Pet&apos;s name</p>
+          <TextareaAutosize
             onChange={(e) => this.onInputChange(e, 'title')}
             value={this.state.post.title}
           />
-          <p>Type of animal (ex. dog, cat)</p>
-          <TextareaAutosize className="post-tags"
+          <p>Pet&apos;s parent(s) separated by commas (ex. &apos;mom, dad&apos;)</p>
+          <TextareaAutosize
+            onChange={(e) => this.onInputChange(e, 'parents')}
+            value={this.state.post.parents}
+          />
+          <p>Type of animal (ex. &apos;dog&apos;)</p>
+          <TextareaAutosize
             onChange={(e) => this.onInputChange(e, 'tags')}
             value={this.state.post.tags}
           />
@@ -156,8 +176,8 @@ class EditPost extends Component {
             value={this.state.post.content}
             placeholder="Markdown supported!"
           />
-          <p>Cover Url</p>
-          <TextareaAutosize className="post-coverUrl"
+          <p>Image Url</p>
+          <TextareaAutosize
             onChange={(e) => this.onInputChange(e, 'coverUrl')}
             value={this.state.post.coverUrl}
           />
@@ -199,6 +219,7 @@ class EditPost extends Component {
             <CoverImg srcImg={this.props.current.coverUrl} tags={this.props.current.tags} isEditPage="true" />
             <div className="name">{this.props.current.title}</div>
             <div className="tags">{this.props.current.tags}</div>
+            {this.renderParents(this.props.current.parents)}
           </div>
 
           <div className="preview-right-panel">

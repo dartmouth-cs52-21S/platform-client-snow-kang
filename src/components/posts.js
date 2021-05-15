@@ -17,8 +17,13 @@ const Posts = (props) => {
       <div className="card" key={post.id}>
         <NavLink exact to={`/posts/${post.id}`} className="card">
           <CoverImg srcImg={post.coverUrl} tags={post.tags} />
-          <div className="name">{post.title || 'anon'}</div>
-          <div className="tags">{post.tags}</div>
+          <div className="name">{post.title}</div>
+          <div>
+            <div className="tags">{post.tags}</div>
+            {post.parents.map((parent) => (
+              <div className="parent" key={parent}>Parent: {parent}</div>
+            ))}
+          </div>
         </NavLink>
       </div>
     )));

@@ -155,17 +155,24 @@ header {
   margin: .5rem;
 }
 
-.tags {
+.tags, .parent {
   display: inline-block;
   background-color: $BLUE;
   color: white;
   padding: .5rem 1rem;
   border-radius: 1rem;
   text-transform: lowercase;
+  margin: 0.2rem;
 
   &:first-letter {
     text-transform: uppercase;
   }
+}
+
+.parent {
+  background-color: $PINK;
+  color: black;
+  text-transform: capitalize;
 }
 
 /* Home page */
@@ -189,6 +196,10 @@ header {
     transition: all ease .3s;
   }
 
+  * {
+    max-width: $CARD-SIZE;
+  }
+
   .circular {
     height: $CARD-SIZE;
     width: $CARD-SIZE;
@@ -201,7 +212,6 @@ header {
     box-shadow: lightgray 0 1rem 1rem;
 
     + .name {
-      max-width: $CARD-SIZE;
       min-width: 12rem;
     }
 
@@ -241,7 +251,7 @@ textarea {
   margin:3rem 0;
   
   .post-content {
-    min-height: 10rem;
+    min-height: 8rem;
   }
 
   .icons {
