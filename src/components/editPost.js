@@ -191,6 +191,9 @@ class EditPost extends Component {
             <div className="name">{this.state.post.title}</div>
             <div className="tags">{this.state.post.tags}</div>
             {this.renderParents(this.state.post.parents.split(','))}
+            <div className="content">
+              <ReactMarkdown>{this.state.post.content || ''}</ReactMarkdown>
+            </div>
           </div>
         </div>
       );

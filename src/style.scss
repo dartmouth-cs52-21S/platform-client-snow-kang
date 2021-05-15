@@ -2,8 +2,8 @@ $HEADER-HEIGHT: 8rem;
 $PINK: rgb(255, 208, 216);
 $BLUE: rgb(96, 133, 175);
 $BLACK: rgb(24, 24, 24);
-$CARD-SIZE: 300px;
-$CARD-SPACING: 10px;
+$CARD-SIZE: 280px;
+$CARD-SPACING: 1rem;
 $FULL-WIDTH: 100vw;
 $RAINBOW-GRADIENT:  linear-gradient(
   to right,
@@ -250,15 +250,17 @@ textarea {
 
 .edit-and-preview {
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
+  width: 60vw;
 
-  .edit-preview {
-    margin: 2rem;
+  .content {
+    min-height: 10vh;
   }
 }
 
 .edit-post {
-  width: 35vw;
+  width: 28vw;
   background: $PINK;
   border-radius: 1rem;
   padding: 2rem;
@@ -356,17 +358,6 @@ textarea {
         font-size: 2rem;
         text-transform: lowercase;
       }
-
-      .content {
-        margin: 1rem 0;
-        padding: 2rem;
-        background: $BLUE;
-        color: white;
-        border: .5rem solid white;
-        min-height: 350px;
-        border-radius: 1rem;
-        text-align: left;
-      }
     }
   }
 }
@@ -400,6 +391,17 @@ textarea {
     display: flex;
     min-height: 5rem;
   }
+}
+
+.content {
+  margin: 1rem 0;
+  padding: 2rem;
+  background: $BLUE;
+  color: white;
+  border: .5rem solid white;
+  min-height: 350px;
+  border-radius: 1rem;
+  text-align: left;
 }
 
 /* Modal upon Deletion Request */
