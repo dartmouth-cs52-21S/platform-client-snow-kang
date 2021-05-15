@@ -150,7 +150,7 @@ class EditPost extends Component {
             onChange={(e) => this.onInputChange(e, 'tags')}
             value={this.state.post.tags}
           />
-          <p>Add compliments here! Now is not the time to hold back 😇</p>
+          <p>Tell us about your pet and all of their best traits! Now is not the time to hold back 😇</p>
           <TextareaAutosize className="post-content"
             onChange={(e) => this.onInputChange(e, 'content')}
             value={this.state.post.content}
