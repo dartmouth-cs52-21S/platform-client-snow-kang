@@ -10,20 +10,18 @@ import {
 } from '../actions';
 import CoverImg from './coverImg';
 
-const fallbackSrc = require('../img/mysteryDog.png');
-
 class EditPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      subtitle: '',
-      showModal: false,
       post: {
         title: '',
         coverUrl: '',
         content: '',
         tags: '',
       },
+      newComment: '',
+      showModal: false,
       isEditing: !this.props.postID, // default is to edit new notes & to preview preexisting ones
     };
   }
@@ -36,6 +34,7 @@ class EditPost extends Component {
   }
 
   handleSave = () => {
+    // Ensure no field is left empty
     for (const key in this.state.post) {
       if (!this.state.post[key]) {
         toast('🐾 Hey!! Leave no treat uneaten and leave no entry unanswered!');
@@ -55,10 +54,12 @@ class EditPost extends Component {
       return {
         ...prevState,
         post: {
+          ...prevState.post,
           title: this.props.current.title,
           coverUrl: this.props.current.coverUrl,
           content: this.props.current.content,
           tags: this.props.current.tags,
+          comments: this.props.current.comments,
         },
         isEditing: !prevState.isEditing,
       };
@@ -78,10 +79,32 @@ class EditPost extends Component {
     this.props.deletePost(this.props.postID, this.props.oldHistory);
   }
 
-  handleMissingImg = (e) => {
-    e.target.onError = null;
-    e.target.src = fallbackSrc;
-  };
+  handleCommentEdit = (e) => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        newComment: e.target.value,
+      };
+    });
+  }
+
+  handleNewCommentSave = () => {
+    const comment = this.state.newComment.trim();
+    // Disallow empty or duplicate comments
+    if (!comment) {
+      toast('Hmph! Where is my compliment?? 🥺');
+    } else if (this.props.current.comments.includes(comment)) {
+      toast('Please give me new compliments! I have been told this already 😇');
+    } else {
+      const newPost = { ...this.props.current, comments: [comment].concat(this.props.current.comments) };
+      this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+    }
+  }
+
+  handleDeleteComment = (commentToDelete) => {
+    const newPost = { ...this.props.current, comments: this.props.current.comments.filter((comment) => comment !== commentToDelete) };
+    this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+  }
 
   onInputChange = (e, label) => {
     this.setState((prevState) => {
@@ -93,6 +116,24 @@ class EditPost extends Component {
         },
       };
     });
+  }
+
+  renderComments = (comments) => {
+    if (comments) {
+      return (comments.map((comment) => (
+        <div key={comment} className="comment">
+          <i className="fas fa-window-close"
+            role="button"
+            tabIndex="0"
+            aria-label="Delete comment"
+            onClick={() => this.handleDeleteComment(comment)}
+          />
+          <ReactMarkdown>{comment || ''}</ReactMarkdown>
+        </div>
+      )));
+    } else {
+      return (null);
+    }
   }
 
   renderPostText = () => {
@@ -113,6 +154,7 @@ class EditPost extends Component {
           <TextareaAutosize className="post-content"
             onChange={(e) => this.onInputChange(e, 'content')}
             value={this.state.post.content}
+            placeholder="Markdown supported!"
           />
           <p>Cover Url</p>
           <TextareaAutosize className="post-coverUrl"
@@ -152,19 +194,35 @@ class EditPost extends Component {
               <div id="keep-post" role="button" tabIndex="0" onClick={this.closeModal}>Keep and allow me to continue receiving my positive affirmations</div>
             </div>
           </ReactModal>
+
           <div className="preview-left-panel">
             <CoverImg srcImg={this.props.current.coverUrl} tags={this.props.current.tags} isEditPage="true" />
             <div className="name">{this.props.current.title}</div>
             <div className="tags">{this.props.current.tags}</div>
           </div>
+
           <div className="preview-right-panel">
-            <div id="fan-mail-title">{this.props.current.title}&apos;s fan mail! 💌 </div>
+            <div id="fan-mail-title">✨ get to know {this.props.current.title}! ✨ </div>
             <div className="content">
               <ReactMarkdown>{this.props.current.content || ''}</ReactMarkdown>
             </div>
             <div className="buttons">
-              <input type="button" onClick={this.handleEdit} value="Give me a compliment" />
+              <input type="button" onClick={this.handleEdit} value="Edit me" />
               <input type="button" onClick={this.openModal} value="Delete me?? You wouldn&apos;t, would you?!" />
+            </div>
+          </div>
+
+          <div className="comment-section">
+            <TextareaAutosize className="new-comment"
+              onChange={this.handleCommentEdit}
+              value={this.state.newComment}
+              placeholder="Markdown supported!"
+            />
+            <div className="buttons">
+              <input type="button" onClick={this.handleNewCommentSave} value="Give me a compliment 😇" />
+            </div>
+            <div className="existing-comments">
+              {this.renderComments(this.props.current.comments)}
             </div>
           </div>
         </div>

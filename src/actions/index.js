@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // const ROOT_URL = 'https://platform.cs52.me/api';
 // const API_KEY = '?key=snow';
-const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
+// const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
+const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -54,11 +55,15 @@ export function createPost(post, history) {
   };
 }
 
-export function updatePost(id, post, history) {
+export function updatePost(id, post, history, stayOnPage) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, post).then(() => {
-      dispatch(clearFilterTags());
-      history.push('/'); // navigate to main page after update
+      if (!stayOnPage) {
+        dispatch(clearFilterTags());
+        history.push('/'); // navigate to main page after update
+      } else {
+        history.go(0);
+      }
     }).catch((error) => {
       console.log(error);
       dispatch({ type: ActionTypes.ERROR_SET, error });

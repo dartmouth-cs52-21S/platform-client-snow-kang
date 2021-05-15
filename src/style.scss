@@ -260,7 +260,6 @@ textarea {
 /* Updating posts page*/
 .buttons {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
 
@@ -272,7 +271,7 @@ textarea {
     padding: .5rem 1rem;
     font-size: 1.1rem;
     margin: 0 .5rem;
-    margin-top: 1rem;
+    white-space: normal;
 
     &:hover {
       background-color: lighten($color: $PINK, $amount: 5%);
@@ -290,8 +289,6 @@ textarea {
   .preview-post {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 80%;
     margin: 3rem 0;
 
     .preview-left-panel {
@@ -321,34 +318,62 @@ textarea {
     }
 
     .preview-right-panel {
-      width: 40vw;
-      margin-left: 5rem;
-
+      width: 30vw;
+      margin: 0 2rem;
       #fan-mail-title {
         font-family: Petit Formal Script;
         font-size: 2rem;
+        text-transform: lowercase;
       }
 
       .content {
-        margin-top: 1rem;
+        margin: 1rem 0;
+        padding: 2rem;
         background: $BLUE;
         color: white;
         border: .5rem solid white;
         min-height: 350px;
         border-radius: 1rem;
-        padding: 2rem;
+        text-align: left;
       }
     }
   }
 }
 
-/* Modal upon Deletion Request */
+.comment-section {
+  width: 15vw;
+  .comment {
+    background: $PINK;
+    border-radius: 1rem;
+    border: 3px solid white;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    text-align: left;
 
+    i {
+      display: flex;
+      justify-content: flex-end;
+      color: black;
+      margin-left: 0.5rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .new-comment {
+    display: flex;
+    min-height: 5rem;
+  }
+}
+
+/* Modal upon Deletion Request */
 h2 {
   font-size: 10rem;
 
   + p {
     font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 }
 /* Emoji cursors from emojicursor.app */
@@ -360,7 +385,6 @@ h2 {
 
 #keep-post:hover {
   cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>❤️</text></svg>") 16 0,auto; 
-  font-size: 1.5rem;
   background: $RAINBOW-GRADIENT;
   animation: scroll-right 30s linear infinite;
 }
