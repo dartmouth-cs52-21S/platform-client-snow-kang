@@ -2,14 +2,18 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { fetchPosts, deletePost, updateSearch } from '../actions';
+import {
+  clearError, fetchPosts, deletePost, updateSearch,
+} from '../actions';
 import CoverImg from './coverImg';
 import TagFilters from './tagFilters';
 
 const Posts = (props) => {
   useEffect(() => {
     props.fetchPosts();
+    // Remove toasts from previous pages
     toast.dismiss();
+    props.clearError();
   }, []);
 
   const renderCards = (posts) => {
@@ -85,4 +89,6 @@ const mapStateToProps = (state) => ({
   searchedPosts: state.posts.searchedPosts,
 });
 
-export default connect(mapStateToProps, { fetchPosts, deletePost, updateSearch })(Posts);
+export default connect(mapStateToProps, {
+  fetchPosts, deletePost, updateSearch, clearError,
+})(Posts);

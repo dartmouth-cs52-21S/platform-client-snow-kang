@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { connect } from 'react-redux';
 import EditPost from './editPost';
+import { clearError } from '../actions';
 
 const NewPost = (props) => {
-  toast.dismiss();
+  useEffect(() => {
+    // Remove toasts from previous pages
+    toast.dismiss();
+    props.clearError();
+  }, []);
+
   return (
     <div className="create-note">
       <EditPost oldHistory={props.history} />
@@ -11,4 +18,4 @@ const NewPost = (props) => {
   );
 };
 
-export default NewPost;
+export default connect(null, { clearError })(NewPost);

@@ -43,9 +43,7 @@ class EditPost extends Component {
       }
     }
 
-    // Ensure no duplicate parents
-    const uniqueParents = new Set(this.state.post.parents.split(','));
-    const newPost = { ...this.state.post, parents: Array.from(uniqueParents) };
+    const newPost = { ...this.state.post, parents: this.getUniqueParents() };
 
     if (this.props.postID) {
       this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
@@ -77,6 +75,11 @@ class EditPost extends Component {
 
   closeModal = () => {
     this.setState({ showModal: false });
+  }
+
+  // Removes duplicates from array
+  getUniqueParents = () => {
+    return [...new Set(this.state.post.parents.trim().split(',').map((parent) => parent.trim()))];
   }
 
   handleDelete = () => {
@@ -189,11 +192,13 @@ class EditPost extends Component {
               <i className="fas fa-save" onClick={this.handleSave} role="button" tabIndex="0" label="Save Post" />
             </div>
           </div>
-          <div className="edit-preview">
+          <div className="card">
             <CoverImg srcImg={this.state.post.coverUrl} tags={this.state.post.tags} />
             <div className="name">{this.state.post.title}</div>
-            <div className="tags">{this.state.post.tags}</div>
-            {this.renderParents(this.state.post.parents.split(','))}
+            <div>
+              <div className="tags">{this.state.post.tags}</div>
+              {this.renderParents(this.getUniqueParents())}
+            </div>
             <div className="content">
               <ReactMarkdown>{this.state.post.content || ''}</ReactMarkdown>
             </div>

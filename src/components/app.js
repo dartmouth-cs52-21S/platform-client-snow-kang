@@ -1,13 +1,17 @@
 import '../style.scss';
-import React from 'react';
-import {
-  BrowserRouter as Router, Route, NavLink,
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { AnimatedSwitch, spring } from 'react-router-transition';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { connect } from 'react-redux';
+import NavBar from './navbar';
 import NewPost from './newPost';
 import Posts from './posts';
 import ExpandedPost from './expandedPost';
+import Signin from './signin';
+import Signup from './signup';
+import PrivateRoute from './privateRoute';
+import { clearError } from '../actions';
 
 /* Page transition code from documentation here
   http://maisano.github.io/react-router-transition/animated-switch/code
@@ -49,32 +53,17 @@ const bounceTransition = {
   },
 };
 
-const logo = require('../img/logo.png');
-
-const NavBar = () => {
-  return (
-    <header>
-      <div>
-        <NavLink exact to="/"><img src={logo} alt="Logo saying Compli-Pets" id="logo" /></NavLink>
-        <nav>
-          <ul>
-            <li><NavLink exact to="/">Home</NavLink></li>
-            <li><NavLink exact to="/posts/new">Create</NavLink></li>
-          </ul>
-        </nav>
-      </div>
-      <div>
-        Compliment each other&apos;s pets <i className="far fa-heart" />
-      </div>
-    </header>
-  );
-};
-
 const FallBack = () => {
   return <div>post not found</div>;
 };
 
-const App = () => {
+const App = (props) => {
+  useEffect(() => {
+    if (props.errorMessage) {
+      toast(props.errorMessage, { onClose: props.clearError });
+    }
+  }, [props.errorMessage]);
+
   return (
     <Router>
       <NavBar />
@@ -86,8 +75,10 @@ const App = () => {
         className="switch-wrapper"
       >
         <Route exact path="/" component={Posts} />
-        <Route exact path="/posts/new" component={NewPost} />
+        <PrivateRoute exact path="/posts/new" component={NewPost} />
         <Route exact path="/posts/:postID" component={ExpandedPost} />
+        <Route exact path="/signin" component={Signin} />
+        <Route exact path="/signup" component={Signup} />
         <Route component={FallBack} />
       </AnimatedSwitch>
       <ToastContainer position="bottom-center" autoClose={7000} />
@@ -95,4 +86,10 @@ const App = () => {
   );
 };
 
-export { App as default };
+const mapStateToProps = (state) => {
+  return {
+    errorMessage: state.error.errorMessage,
+  };
+};
+
+export default connect(mapStateToProps, { clearError })(App);
