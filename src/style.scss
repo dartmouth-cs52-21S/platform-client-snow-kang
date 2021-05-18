@@ -4,7 +4,7 @@ $BLUE: rgb(96, 133, 175);
 $BLACK: rgb(24, 24, 24);
 $CARD-SIZE: 280px;
 $CARD-SPACING: 1rem;
-$FULL-WIDTH: 100vw;
+$FULL-WIDTH: calc(100vw - (100vw - 100%));
 $RAINBOW-GRADIENT:  linear-gradient(
   to right,
   #ff6663,

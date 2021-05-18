@@ -53,24 +53,32 @@ class EditPost extends Component {
   };
 
   handleEdit = () => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        post: {
-          ...prevState.post,
-          title: this.props.current.title,
-          coverUrl: this.props.current.coverUrl,
-          content: this.props.current.content,
-          tags: this.props.current.tags,
-          parents: this.props.current.parents.join(','),
-        },
-        isEditing: !prevState.isEditing,
-      };
-    });
+    if (this.props.authenticated) {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          post: {
+            ...prevState.post,
+            title: this.props.current.title,
+            coverUrl: this.props.current.coverUrl,
+            content: this.props.current.content,
+            tags: this.props.current.tags,
+            parents: this.props.current.parents.join(','),
+          },
+          isEditing: !prevState.isEditing,
+        };
+      });
+    } else {
+      this.props.oldHistory.push('/signin');
+    }
   }
 
   openModal = () => {
-    this.setState({ showModal: true });
+    if (this.props.authenticated) {
+      this.setState({ showModal: true });
+    } else {
+      this.props.oldHistory.push('/signin');
+    }
   }
 
   closeModal = () => {
@@ -97,21 +105,29 @@ class EditPost extends Component {
   }
 
   handleNewCommentSave = () => {
-    const comment = this.state.newComment.trim();
-    // Disallow empty or duplicate comments
-    if (!comment) {
-      toast('Hmph! Where is my compliment?? 🥺');
-    } else if (this.props.current.comments.includes(comment)) {
-      toast('Please give me new compliments! I have been told this already 😇');
+    if (this.props.authenticated) {
+      const comment = this.state.newComment.trim();
+      // Disallow empty or duplicate comments
+      if (!comment) {
+        toast('Hmph! Where is my compliment?? 🥺');
+      } else if (this.props.current.comments.includes(comment)) {
+        toast('Please give me new compliments! I have been told this already 😇');
+      } else {
+        const newPost = { ...this.props.current, comments: [comment].concat(this.props.current.comments) };
+        this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+      }
     } else {
-      const newPost = { ...this.props.current, comments: [comment].concat(this.props.current.comments) };
-      this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+      this.props.oldHistory.push('/signin');
     }
   }
 
   handleDeleteComment = (commentToDelete) => {
-    const newPost = { ...this.props.current, comments: this.props.current.comments.filter((comment) => comment !== commentToDelete) };
-    this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+    if (this.props.authenticated) {
+      const newPost = { ...this.props.current, comments: this.props.current.comments.filter((comment) => comment !== commentToDelete) };
+      this.props.updatePost(this.props.postID, newPost, this.props.oldHistory, true);
+    } else {
+      this.props.oldHistory.push('/signin');
+    }
   }
 
   onInputChange = (e, label) => {
@@ -280,6 +296,7 @@ class EditPost extends Component {
 const mapStateToProps = (state) => {
   return {
     current: state.posts.current,
+    authenticated: state.auth.authenticated,
   };
 };
 
