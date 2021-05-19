@@ -263,6 +263,7 @@ header {
   flex-wrap: wrap;
   flex-direction: row;
   max-width: $FULL-WIDTH;
+  margin: 1rem 2rem;
   margin-bottom: 3rem;
 
   .card:hover {
@@ -511,6 +512,10 @@ h2 {
     > div {
       display: flex;
       flex-direction: column;
+
+      &:first-child ul li > * {
+        font-size: 1rem;
+      }
 
       > nav {
         margin-bottom: 1rem;
