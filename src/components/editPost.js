@@ -255,8 +255,10 @@ class EditPost extends Component {
             <CoverImg srcImg={this.props.current.coverUrl} tags={this.props.current.tags} isEditPage="true" />
             <div className="name">{this.props.current.title}</div>
             <div className="author">by {this.props.current.author ? this.props.current.author : 'anonymous'}</div>
-            <div className="tags">{this.props.current.tags}</div>
-            {this.renderParents(this.props.current.parents)}
+            <div>
+              <div className="tags">{this.props.current.tags}</div>
+              {this.renderParents(this.props.current.parents)}
+            </div>
           </div>
 
           <div className="preview-right-panel">
