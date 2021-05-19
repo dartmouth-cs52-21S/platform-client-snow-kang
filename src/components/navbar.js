@@ -14,9 +14,10 @@ const NavBar = (props) => {
     if (props.authenticated) {
       return (
         <ul>
+
           <li><NavLink exact to="/">Home</NavLink></li>
           <li><NavLink exact to="/posts/new">Create</NavLink></li>
-          <li><NavLink exact to="/signout" onClick={handleSignout}>Sign out</NavLink></li>
+          <li><button type="button" onClick={handleSignout}>Sign out</button></li>
         </ul>
       );
     } else {

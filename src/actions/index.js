@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // const ROOT_URL = 'https://platform.cs52.me/api';
 // const API_KEY = '?key=snow';
-const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
+// const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
+const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -42,7 +43,14 @@ export function updateSearch(search) {
 export function authError(error) {
   return {
     type: ActionTypes.AUTH_ERROR,
-    payload: error,
+    message: error,
+  };
+}
+
+export function setError(error) {
+  return {
+    type: ActionTypes.ERROR_SET,
+    message: error,
   };
 }
 
@@ -59,7 +67,7 @@ export function fetchPost(id) {
       dispatch({ type: ActionTypes.FETCH_POST, payload: response.data });
     }).catch((error) => {
       console.log(error);
-      dispatch({ type: ActionTypes.ERROR_SET, error });
+      dispatch(setError(`Fetch Post Failed: ${error.response.data}`));
     });
   };
 }
@@ -70,7 +78,7 @@ export function fetchPosts() {
       dispatch({ type: ActionTypes.FETCH_POSTS, payload: response.data });
     }).catch((error) => {
       console.log(error);
-      dispatch({ type: ActionTypes.ERROR_SET, error });
+      dispatch(setError(`Fetch All Posts Failed: ${error.response.data}`));
     });
   };
 }
@@ -82,7 +90,7 @@ export function createPost(post, history) {
       history.push('/'); // navigate to main page after creation
     }).catch((error) => {
       console.log(error);
-      dispatch({ type: ActionTypes.ERROR_SET, error });
+      dispatch(setError(`Create Post Failed: ${error.response.data}`));
     });
   };
 }
@@ -98,19 +106,19 @@ export function updatePost(id, post, history, stayOnPage) {
       }
     }).catch((error) => {
       console.log(error);
-      dispatch({ type: ActionTypes.ERROR_SET, error });
+      dispatch(setError(`Update Post Failed: ${error.response.data}`));
     });
   };
 }
 
 export function deletePost(id, history) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}`, null, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch(clearFilterTags());
       history.push('/'); // navigate to main page after deletion
     }).catch((error) => {
       console.log(error);
-      dispatch({ type: ActionTypes.ERROR_SET, error });
+      dispatch(setError(`Delete Post Failed: ${error.response.data}`));
     });
   };
 }

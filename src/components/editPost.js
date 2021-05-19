@@ -243,16 +243,18 @@ class EditPost extends Component {
             contentLabel="Deletion Modal"
           >
             <h2>WHAT????</h2>
-            <p>Look, it&apos;s not too late to change your mind. <br />I gain a lot of joy from getting compliments. Please don&apos;t take my joy away...please</p>
+            <p>Look, it&apos;s not too late to change your mind.</p>
+            <p>I gain a lot of joy from getting compliments. Please don&apos;t take my joy away...please</p>
             <div className="buttons">
               <div id="delete-post" role="button" tabIndex="0" onClick={this.handleDelete}>Delete and accept you are heartless</div>
               <div id="keep-post" role="button" tabIndex="0" onClick={this.closeModal}>Keep and allow me to continue receiving my positive affirmations</div>
             </div>
           </ReactModal>
 
-          <div className="preview-left-panel">
+          <div className="preview-left-panel card">
             <CoverImg srcImg={this.props.current.coverUrl} tags={this.props.current.tags} isEditPage="true" />
             <div className="name">{this.props.current.title}</div>
+            <div className="author">by {this.props.current.author ? this.props.current.author : 'anonymous'}</div>
             <div className="tags">{this.props.current.tags}</div>
             {this.renderParents(this.props.current.parents)}
           </div>
