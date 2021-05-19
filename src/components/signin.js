@@ -33,18 +33,22 @@ class Signin extends Component {
 
   render() {
     return (
-      <div>
-        <input type="text"
-          onChange={this.handleEmailEdit}
-          value={this.state.email}
-          placeholder="Email"
-        />
-        <input type="text"
-          onChange={this.handlePasswordEdit}
-          value={this.state.password}
-          placeholder="Password"
-        />
-        <input type="button" onClick={this.handleSignin} value="Sign In" />
+      <div className="authentication-entries">
+        <div className="edit-box">
+          <input type="text"
+            onChange={this.handleEmailEdit}
+            value={this.state.email}
+            placeholder="Email"
+          />
+          <input type="password"
+            onChange={this.handlePasswordEdit}
+            value={this.state.password}
+            placeholder="Password"
+          />
+          <div className="buttons">
+            <input type="button" onClick={this.handleSignin} value="Sign In" />
+          </div>
+        </div>
       </div>
     );
   }

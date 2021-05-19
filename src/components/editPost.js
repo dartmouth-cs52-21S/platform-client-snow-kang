@@ -174,7 +174,7 @@ class EditPost extends Component {
     if (this.state.isEditing) {
       return (
         <div className="edit-and-preview">
-          <div className="edit-post">
+          <div className="edit-box">
             <p>Pet&apos;s name</p>
             <TextareaAutosize
               onChange={(e) => this.onInputChange(e, 'title')}
