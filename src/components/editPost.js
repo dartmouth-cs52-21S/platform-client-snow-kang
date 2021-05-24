@@ -20,6 +20,7 @@ class EditPost extends Component {
         content: '',
         tags: '',
         parents: '',
+        coverUrl: '',
       },
       preview: '',
       newComment: '',
@@ -67,8 +68,7 @@ class EditPost extends Component {
         console.log(error);
       });
     } else {
-      console.log('No uploaded file');
-      newPost = { ...newPost, coverUrl: '' };
+      newPost = { ...newPost };
       if (this.props.postID) {
         this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
       } else {
@@ -90,6 +90,7 @@ class EditPost extends Component {
             tags: this.props.current.tags,
             parents: this.props.current.parents.join(','),
           },
+          preview: this.props.current.coverUrl,
           isEditing: !prevState.isEditing,
         };
       });
