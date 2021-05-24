@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // const ROOT_URL = 'https://platform.cs52.me/api';
 // const API_KEY = '?key=snow';
-const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
+export const ROOT_URL = 'https://compli-pet-platform-server.herokuapp.com/api';
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',

@@ -9,6 +9,7 @@ import {
   createPost, updatePost, deletePost, fetchPost,
 } from '../actions';
 import CoverImg from './coverImg';
+import uploadImage from '../s3';
 
 class EditPost extends Component {
   constructor(props) {
@@ -16,11 +17,11 @@ class EditPost extends Component {
     this.state = {
       post: {
         title: '',
-        coverUrl: '',
         content: '',
         tags: '',
         parents: '',
       },
+      preview: '',
       newComment: '',
       showModal: false,
       isEditing: !this.props.postID, // default is to edit new notes & to preview preexisting ones
@@ -34,21 +35,45 @@ class EditPost extends Component {
     ReactModal.setAppElement('#main');
   }
 
+  onImageUpload = (event) => {
+    const file = event.target.files[0];
+    // Handle null file
+    // Get url of the file and set it to the src of preview
+    if (file) {
+      this.setState({ preview: window.URL.createObjectURL(file), file });
+    }
+  }
+
   handleSave = () => {
+    let newPost = { ...this.state.post, parents: this.getUniqueParents() };
     // Ensure no field is left empty
     for (const key in this.state.post) {
-      if (!this.state.post[key]) {
+      if (!this.state.post[key] && key !== 'coverUrl') {
         toast('🐾 Hey!! Leave no treat uneaten and leave no entry unanswered!');
         return;
       }
     }
 
-    const newPost = { ...this.state.post, parents: this.getUniqueParents() };
-
-    if (this.props.postID) {
-      this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
+    if (this.state.file) {
+      uploadImage(this.state.file).then((url) => {
+        newPost = { ...newPost, coverUrl: url };
+        console.log(newPost);
+        if (this.props.postID) {
+          this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
+        } else {
+          this.props.createPost(newPost, this.props.oldHistory);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
     } else {
-      this.props.createPost(newPost, this.props.oldHistory);
+      console.log('No uploaded file');
+      newPost = { ...newPost, coverUrl: '' };
+      if (this.props.postID) {
+        this.props.updatePost(this.props.postID, newPost, this.props.oldHistory);
+      } else {
+        this.props.createPost(newPost, this.props.oldHistory);
+      }
     }
   };
 
@@ -198,18 +223,14 @@ class EditPost extends Component {
               value={this.state.post.content}
               placeholder="Markdown supported!"
             />
-            <p>Image Url</p>
-            <TextareaAutosize
-              onChange={(e) => this.onInputChange(e, 'coverUrl')}
-              value={this.state.post.coverUrl}
-              placeholder="After filling out the type of animal (ex. 'dog), try a broken link here"
-            />
+            <p>Upload Image</p>
+            <input type="file" name="coverImage" onChange={this.onImageUpload} />
             <div className="icons">
               <i className="fas fa-save" onClick={this.handleSave} role="button" tabIndex="0" label="Save Post" />
             </div>
           </div>
           <div className="card">
-            <CoverImg srcImg={this.state.post.coverUrl} tags={this.state.post.tags} />
+            <CoverImg srcImg={this.state.preview} tags={this.state.post.tags} />
             <div className="name">{this.state.post.title}</div>
             <div>
               <div className="tags">{this.state.post.tags}</div>
