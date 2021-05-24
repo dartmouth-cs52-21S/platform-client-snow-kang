@@ -24,11 +24,11 @@
     - Instantly shows fallback silhouette when link is broken
     - Instantly shows real image when the link is valid
 - Lots of animations and effects everywhere
+- Image Upload with AWS S3
 
 ## Screenshots
 ![screen1](https://user-images.githubusercontent.com/38738497/118359030-7a125e00-b54f-11eb-9129-2c84bf61c41f.PNG)
 ![screen2](https://user-images.githubusercontent.com/38738497/118359031-7a125e00-b54f-11eb-95ce-19edaefbd0d6.PNG)
 ![screen3](https://user-images.githubusercontent.com/38738497/118359034-7aaaf480-b54f-11eb-94f4-c265b42fb089.PNG)
 ![screen4](https://user-images.githubusercontent.com/38738497/118359035-7b438b00-b54f-11eb-88f9-675287a377b5.PNG)
-![screen5](https://user-images.githubusercontent.com/38738497/118359029-78e13100-b54f-11eb-9f0c-3ef35d3ada10.PNG)
 
