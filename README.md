@@ -4,6 +4,12 @@
 
 [deployed url](https://snowxposts.netlify.app)
 
+[api github url](https://github.com/dartmouth-cs52-21S/platform-api-snow-kang)
+
+[netlify client url](https://snowxposts.netlify.app/)
+
+[heroku api url](https://compli-pet-platform-server.herokuapp.com/)
+
 ## What Worked Well
 - I really am happy with my overall design this time! I spent a lot of time adjusting the style to make it feel more clean than my previous labs which were always super busy (I still snuck a rainbow gradient into this lab though, I couldn't resist). 
 -I learned a lot of new things like filtering, page transitions, and toast notifications! Yayyy 
